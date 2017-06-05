@@ -77,9 +77,70 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderGrid = renderGrid;
-data = __webpack_require__(1);
+function renderGrid() {
+  var data = __webpack_require__(1);
+  var keys = Object.keys(data);
+  var body = document.getElementById('grid-body');
+  createColumns();
+  keys.forEach(function (key) {
+    var country = data[key];
+    var countryKeys = Object.keys(country);
+    var row = document.createElement("div");
+    row.className = "grid-data-item";
 
-function renderGrid() {}
+    countryKeys.forEach(function (dataKey) {
+      var columnValue = country[dataKey];
+      if (typeof columnValue === 'number') {
+        columnValue = columnValue.toLocaleString();
+        columnValue = '$' + columnValue;
+      }
+      if (dataKey === "BestCase" || dataKey === "Commit") {
+        var i = 0;
+        var rowData = document.createElement("ul");
+        while (i < 2) {
+          var rowDataItem = document.createElement("li");
+          var rowDataValue = document.createTextNode('$' + columnValue[i].toLocaleString());
+          if (i === 1) {
+            rowDataItem.className = 'grid-data-' + dataKey + ' more';
+          } else {
+            rowDataItem.className = 'grid-data-' + dataKey;
+          }
+          rowDataItem.appendChild(rowDataValue);
+          rowData.appendChild(rowDataItem);
+          i += 1;
+        }
+        row.appendChild(rowData);
+      } else {
+        var _rowData = document.createElement("div");
+        _rowData.className = 'grid-data-' + dataKey;
+        var _rowDataValue = document.createTextNode('' + columnValue);
+        _rowData.appendChild(_rowDataValue);
+        if (dataKey === "MonthlyPlan" || dataKey === "Comments") {
+          _rowData.style.display = 'none';
+        }
+        row.appendChild(_rowData);
+      }
+    });
+    body.appendChild(row);
+  });
+}
+
+function createColumns() {
+  var header = document.getElementById('grid-head');
+  var headerRow = document.createElement('div');
+  headerRow.className = "grid-header-row";
+  var columnNames = ["Plan", "Forecast", "Best Case", "Commit", "Monthly Plan", "Comments"];
+  columnNames.forEach(function (name) {
+    var column = document.createElement('div');
+    var columnName = document.createTextNode('' + name);
+    if (name === "Monthly Plan" || name === "Comments") {
+      column.style.display = "None";
+    }
+    column.appendChild(columnName);
+    headerRow.appendChild(column);
+  });
+  header.appendChild(headerRow);
+}
 
 /***/ }),
 /* 1 */
