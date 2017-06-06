@@ -18,16 +18,14 @@ export function renderGrid(){
       }
       if(dataKey === "BestCase" || dataKey === "Commit"){
         let i = 0
-        let rowData = document.createElement("ul");
-        rowData.className = 'grid-cell';
+        let rowData = document.createElement("div");
+        rowData.className = `grid-cell grid-data-${dataKey.toLowerCase()}`;
 
         while(i < 2){
           let rowDataItem = document.createElement("li");
           let rowDataValue = document.createTextNode(`$${columnValue[i].toLocaleString()}`);
           if(i === 1){
-            rowDataItem.className = `grid-data-${dataKey.toLowerCase()} more`;
-          }else{
-            rowDataItem.className = `grid-data-${dataKey.toLowerCase()}`
+            rowDataItem.className = 'more';
           }
           rowDataItem.appendChild(rowDataValue);
           rowData.appendChild(rowDataItem)
