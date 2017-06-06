@@ -77,6 +77,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderGrid = renderGrid;
+exports.addSelectorEvents = addSelectorEvents;
 function renderGrid() {
   var data = __webpack_require__(1);
   var keys = Object.keys(data);
@@ -97,13 +98,15 @@ function renderGrid() {
       if (dataKey === "BestCase" || dataKey === "Commit") {
         var i = 0;
         var rowData = document.createElement("ul");
+        rowData.className = 'grid-cell';
+
         while (i < 2) {
           var rowDataItem = document.createElement("li");
           var rowDataValue = document.createTextNode('$' + columnValue[i].toLocaleString());
           if (i === 1) {
-            rowDataItem.className = 'grid-data-' + dataKey + ' more';
+            rowDataItem.className = 'grid-data-' + dataKey.toLowerCase() + ' more';
           } else {
-            rowDataItem.className = 'grid-data-' + dataKey;
+            rowDataItem.className = 'grid-data-' + dataKey.toLowerCase();
           }
           rowDataItem.appendChild(rowDataValue);
           rowData.appendChild(rowDataItem);
@@ -112,7 +115,7 @@ function renderGrid() {
         row.appendChild(rowData);
       } else {
         var _rowData = document.createElement("div");
-        _rowData.className = 'grid-data-' + dataKey;
+        _rowData.className = 'grid-data-' + dataKey.toLowerCase() + ' grid-cell';
         var _rowDataValue = document.createTextNode('' + columnValue);
         _rowData.appendChild(_rowDataValue);
         if (dataKey === "MonthlyPlan" || dataKey === "Comments") {
@@ -129,17 +132,45 @@ function createColumns() {
   var header = document.getElementById('grid-head');
   var headerRow = document.createElement('div');
   headerRow.className = "grid-header-row";
-  var columnNames = ["Plan", "Forecast", "Best Case", "Commit", "Monthly Plan", "Comments"];
+  var columnNames = ["NAME", "PLAN", "FORECAST", "BEST CASE", "COMMIT", "MONTHLY PLAN", "COMMENTS"];
   columnNames.forEach(function (name) {
     var column = document.createElement('div');
     var columnName = document.createTextNode('' + name);
-    if (name === "Monthly Plan" || name === "Comments") {
+    if (name === "MONTHLY PLAN" || name === "COMMENTS") {
       column.style.display = "None";
     }
     column.appendChild(columnName);
+    column.className = "grid-cell";
     headerRow.appendChild(column);
   });
   header.appendChild(headerRow);
+}
+
+function addSelectorEvents() {
+  var selectors = document.getElementsByTagName('input');
+  selectors = Array.from(selectors);
+  selectors = selectors.filter(function (node) {
+    return node.value === 'More' || node.value === 'Less';
+  });
+  selectors.forEach(function (selector) {
+    if (selector.value === 'More') {
+      selector.addEventListener('click', function () {
+        var elements = document.getElementsByClassName('more');
+        elements = Array.from(elements);
+        elements.forEach(function (element) {
+          element.style.display = 'block';
+        });
+      });
+    } else {
+      selector.addEventListener('click', function () {
+        var elements = document.getElementsByClassName('more');
+        elements = Array.from(elements);
+        elements.forEach(function (element) {
+          element.style.display = 'none';
+        });
+      });
+    }
+  });
 }
 
 /***/ }),
@@ -235,6 +266,7 @@ var _datagrid = __webpack_require__(0);
 
 document.addEventListener("DOMContentLoaded", function () {
   (0, _datagrid.renderGrid)();
+  (0, _datagrid.addSelectorEvents)();
 });
 
 /***/ })
