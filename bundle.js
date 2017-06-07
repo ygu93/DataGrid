@@ -79,6 +79,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.renderGrid = renderGrid;
 exports.addSelectorEvents = addSelectorEvents;
 function renderGrid() {
+  renderDropDownIcon();
   var data = __webpack_require__(1);
   var keys = Object.keys(data);
   var body = document.getElementById('grid-body');
@@ -148,6 +149,13 @@ function createColumns() {
     headerRow.appendChild(column);
   });
   header.appendChild(headerRow);
+}
+
+function renderDropDownIcon() {
+  var dataGrid = document.getElementById('data-grid');
+  var icon = document.createElement('i');
+  icon.className = "fa fa-caret-square-o-down fa-2x";
+  dataGrid.appendChild(icon);
 }
 
 function addSelectorEvents() {

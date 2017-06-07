@@ -1,5 +1,6 @@
 
 export function renderGrid(){
+  renderDropDownIcon();
   let data = require('./data.json');
   let keys = Object.keys(data);
   let body = document.getElementById('grid-body')
@@ -67,6 +68,13 @@ function createColumns(){
     headerRow.appendChild(column);
   })
   header.appendChild(headerRow);
+}
+
+function renderDropDownIcon(){
+  let dataGrid = document.getElementById('data-grid');
+  let icon = document.createElement('i');
+  icon.className = "fa fa-caret-square-o-down fa-2x";
+  dataGrid.appendChild(icon);
 }
 
 export function addSelectorEvents(){
