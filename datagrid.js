@@ -54,12 +54,15 @@ function createColumns(){
   let columnNames = ["NAME", "PLAN", "FORECAST", "BEST CASE", "COMMIT", "MONTHLY PLAN", "COMMENTS"];
   columnNames.forEach((name, i) => {
     let column = document.createElement('div');
-    column.addEventListener('click', function(){ sortTable(i); });
+    column.addEventListener('click', function(e){ sortTable(i, name, e); });
     let columnName = document.createTextNode(`${name}`);
     if(name === "MONTHLY PLAN" || name === "COMMENTS"){
       column.style.display = "None";
     }
     column.appendChild(columnName);
+    let sortIcon = document.createElement('i');
+    sortIcon.className = 'fa fa-sort';
+    column.appendChild(sortIcon);
     column.className = "grid-cell";
     headerRow.appendChild(column);
   })
@@ -91,7 +94,7 @@ export function addSelectorEvents(){
   })
 }
 
-function sortTable(n){
+function sortTable(n, name, e){
   let table, rows, swapped, i, value1, value2, shouldSwap, dir, swapCount = 0;
   table = document.getElementById('data-grid');
   dir = "asc";
@@ -115,13 +118,13 @@ function sortTable(n){
         value2 = value2.getElementsByTagName('li')[0];
       }
 
-      if(value1.innerHTML[0] === '$'){
+      if(name !==  'COMMENTS' && name!== 'NAME'){
         value1 = convertToNum(value1.innerHTML.slice(1));
       }else{
         value1 = value1.innerHTML;
       }
 
-      if(value2.innerHTML[0] === '$'){
+      if(name !== 'COMMENTS' && name !== 'NAME'){
         value2 = convertToNum(value2.innerHTML.slice(1));
       }else{
         value2 = value2.innerHTML;
@@ -151,6 +154,11 @@ function sortTable(n){
       }
     }
 
+  }
+  if(dir === "asc"){
+    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-asc';
+  }else if(dir === "desc"){
+    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-desc';
   }
 }
 

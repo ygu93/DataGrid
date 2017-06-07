@@ -133,14 +133,17 @@ function createColumns() {
   var columnNames = ["NAME", "PLAN", "FORECAST", "BEST CASE", "COMMIT", "MONTHLY PLAN", "COMMENTS"];
   columnNames.forEach(function (name, i) {
     var column = document.createElement('div');
-    column.addEventListener('click', function () {
-      sortTable(i);
+    column.addEventListener('click', function (e) {
+      sortTable(i, name, e);
     });
     var columnName = document.createTextNode('' + name);
     if (name === "MONTHLY PLAN" || name === "COMMENTS") {
       column.style.display = "None";
     }
     column.appendChild(columnName);
+    var sortIcon = document.createElement('i');
+    sortIcon.className = 'fa fa-sort';
+    column.appendChild(sortIcon);
     column.className = "grid-cell";
     headerRow.appendChild(column);
   });
@@ -174,7 +177,7 @@ function addSelectorEvents() {
   });
 }
 
-function sortTable(n) {
+function sortTable(n, name, e) {
   var table = void 0,
       rows = void 0,
       swapped = void 0,
@@ -205,13 +208,13 @@ function sortTable(n) {
         value2 = value2.getElementsByTagName('li')[0];
       }
 
-      if (value1.innerHTML[0] === '$') {
+      if (name !== 'COMMENTS' && name !== 'NAME') {
         value1 = convertToNum(value1.innerHTML.slice(1));
       } else {
         value1 = value1.innerHTML;
       }
 
-      if (value2.innerHTML[0] === '$') {
+      if (name !== 'COMMENTS' && name !== 'NAME') {
         value2 = convertToNum(value2.innerHTML.slice(1));
       } else {
         value2 = value2.innerHTML;
@@ -240,6 +243,11 @@ function sortTable(n) {
         swapped = true;
       }
     }
+  }
+  if (dir === "asc") {
+    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-asc';
+  } else if (dir === "desc") {
+    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-desc';
   }
 }
 
