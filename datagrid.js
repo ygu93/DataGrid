@@ -52,8 +52,9 @@ function createColumns(){
   let headerRow = document.createElement('div');
   headerRow.className = "grid-header-row";
   let columnNames = ["NAME", "PLAN", "FORECAST", "BEST CASE", "COMMIT", "MONTHLY PLAN", "COMMENTS"];
-  columnNames.forEach(name => {
+  columnNames.forEach((name, i) => {
     let column = document.createElement('div');
+    column.addEventListener('click', function(){ sortTable(i); });
     let columnName = document.createTextNode(`${name}`);
     if(name === "MONTHLY PLAN" || name === "COMMENTS"){
       column.style.display = "None";
@@ -88,4 +89,71 @@ export function addSelectorEvents(){
       })
     }
   })
+}
+
+function sortTable(n){
+  let table, rows, swapped, i, value1, value2, shouldSwap, dir, swapCount = 0;
+  table = document.getElementById('data-grid');
+  dir = "asc";
+  swapped = true;
+
+  while(swapped){
+    swapped = false;
+    rows = document.getElementsByClassName('grid-data-item');
+    shouldSwap = false;
+
+
+    for(i=0;i<(rows.length-1);i++){
+      value1 = rows[i].getElementsByTagName("div")[n];
+      value2 = rows[i + 1].getElementsByTagName("div")[n];
+
+      if(value1.className.includes('grid-data-commit') || value1.className.includes('grid-data-bestcase')){
+        value1 = value1.getElementsByTagName('li')[0];
+      }
+
+      if(value2.className.includes('grid-data-commit') || value2.className.includes('grid-data-bestcase')){
+        value2 = value2.getElementsByTagName('li')[0];
+      }
+
+      if(value1.innerHTML[0] === '$'){
+        value1 = convertToNum(value1.innerHTML.slice(1));
+      }else{
+        value1 = value1.innerHTML;
+      }
+
+      if(value2.innerHTML[0] === '$'){
+        value2 = convertToNum(value2.innerHTML.slice(1));
+      }else{
+        value2 = value2.innerHTML;
+      }
+
+      if(dir === "asc"){
+        if(value1 > value2){
+          shouldSwap = true;
+          break;
+        }
+      }else if(dir == "desc"){
+        if(value1 < value2){
+          shouldSwap = true;
+          break;
+        }
+      }
+    }
+
+    if(shouldSwap){
+      rows[i].parentNode.insertBefore(rows[i+1], rows[i]);
+      swapped = true;
+      swapCount ++;
+    }else{
+      if(swapCount === 0 && dir === "asc") {
+        dir = "desc";
+        swapped = true;
+      }
+    }
+
+  }
+}
+
+function convertToNum(str){
+  return parseInt(str.split(',').join(''));
 }
