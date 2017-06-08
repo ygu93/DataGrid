@@ -8,6 +8,7 @@
   display: block;
   font-family: 'Montserrat', sans-serif;
   width: 170px;
+  margin-left: 10px;
 }
 
 .options-input{
@@ -119,12 +120,66 @@
   right: 0;
   top: 9.5vh;
   color: darkgray;
+  background-color: rgb(242, 242, 242);
 }
 
 .fa-caret-square-o-down:hover{
   cursor: pointer;
 }
 
+#drop-down{
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 14.4vh;
+  z-index: 1;
+  border: 1px solid darkgray;
+  background-color: white;
+  width: 18vw;
+  padding-bottom: 15px;
+}
+
+#drop-down h3{
+  padding-top: 10px;
+  margin-left: 10px;
+  border-bottom: 1px solid darkgray;
+  padding-bottom: 8px;
+  margin-right: 5px;
+  color: darkslategray;
+}
+
+#drop-down ul{
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
+#drop-down input{
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+#drop-down li{
+  margin-top: 10px;
+}
+
+#drop-down button{
+  margin-top: 25px;
+  margin-left: 10px;
+  background-color: rgb(232, 232, 232);
+  width: 15vw;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  color: gray;
+  font-weight: bold;
+  border: none;
+}
+
+#drop-down button:hover{
+  cursor: pointer;
+}
 
 #data-grid{
   margin-top: 20px;

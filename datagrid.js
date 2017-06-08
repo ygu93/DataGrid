@@ -1,6 +1,6 @@
 
 export function renderGrid(){
-  renderDropDownIcon();
+  renderDropDown();
   let data = require('./data.json');
   let keys = Object.keys(data);
   let body = document.getElementById('grid-body')
@@ -52,12 +52,14 @@ function createColumns(){
   let header = document.getElementById('grid-head')
   let headerRow = document.createElement('div');
   headerRow.className = "grid-header-row";
-  let columnNames = ["NAME", "PLAN", "FORECAST", "BEST CASE", "COMMIT", "MONTHLY PLAN", "COMMENTS"];
+  let dataJson = require('./data.json')
+  let columnNames = Object.keys(dataJson["1"])
   columnNames.forEach((name, i) => {
     let column = document.createElement('div');
     column.addEventListener('click', function(e){ sortTable(i, name, e); });
-    let columnName = document.createTextNode(`${name}`);
-    if(name === "MONTHLY PLAN" || name === "COMMENTS"){
+    name = name.split(/(?=[A-Z])/).join(' ');
+    let columnName = document.createTextNode(`${name.toUpperCase()}`);
+    if(i > 4){
       column.style.display = "None";
     }
     column.appendChild(columnName);
@@ -70,11 +72,55 @@ function createColumns(){
   header.appendChild(headerRow);
 }
 
-function renderDropDownIcon(){
+function renderDropDown(){
   let dataGrid = document.getElementById('data-grid');
   let icon = document.createElement('i');
   icon.className = "fa fa-caret-square-o-down fa-2x";
+  icon.addEventListener('click', () => {
+    let dropDown = document.getElementById('drop-down');
+    dropDown.style.display === 'block' ? dropDown.style.display = 'none' : dropDown.style.display = 'block';
+  })
   dataGrid.appendChild(icon);
+
+  let menu = document.createElement('form');
+  menu.id = "drop-down";
+  let header = document.createElement('h3');
+  header.appendChild(document.createTextNode('SELECTED FIELDS'))
+  menu.appendChild(header);
+  let fieldOptions = document.createElement('ul');
+  menu.appendChild(fieldOptions);
+
+  let dataJson = require('./data.json');
+  Object.keys(dataJson["1"]).forEach(key => {
+    let input = document.createElement('input');
+    input.type = "checkbox";
+    key = key.split(/(?=[A-Z])/).join(' ');
+    input.value = key;
+    input.addEventListener('onchange', () => {
+      let maxChecks = 5;
+      let dropDown = document.getElementById('drop-down');
+      let checkBoxes = dropDown.getElementsByTagName('input');
+      let currentChecks = 0;
+      checkBoxes.forEach(box => {
+        if(box.checked){
+          currentChecks++;
+        }
+      })
+    })
+    let label = document.createElement('label');
+    let labelName = document.createTextNode(`${key}`);
+    label.appendChild(input)
+    label.appendChild(labelName)
+    let listElement = document.createElement('li');
+    listElement.appendChild(label);
+    fieldOptions.appendChild(listElement)
+  })
+
+  let button = document.createElement('button');
+  button.appendChild(document.createTextNode('Apply'));
+  menu.appendChild(button)
+  dataGrid.appendChild(menu);
+
 }
 
 export function addSelectorEvents(){

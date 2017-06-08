@@ -79,7 +79,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.renderGrid = renderGrid;
 exports.addSelectorEvents = addSelectorEvents;
 function renderGrid() {
-  renderDropDownIcon();
+  renderDropDown();
   var data = __webpack_require__(1);
   var keys = Object.keys(data);
   var body = document.getElementById('grid-body');
@@ -131,14 +131,16 @@ function createColumns() {
   var header = document.getElementById('grid-head');
   var headerRow = document.createElement('div');
   headerRow.className = "grid-header-row";
-  var columnNames = ["NAME", "PLAN", "FORECAST", "BEST CASE", "COMMIT", "MONTHLY PLAN", "COMMENTS"];
+  var dataJson = __webpack_require__(1);
+  var columnNames = Object.keys(dataJson["1"]);
   columnNames.forEach(function (name, i) {
     var column = document.createElement('div');
     column.addEventListener('click', function (e) {
       sortTable(i, name, e);
     });
-    var columnName = document.createTextNode('' + name);
-    if (name === "MONTHLY PLAN" || name === "COMMENTS") {
+    name = name.split(/(?=[A-Z])/).join(' ');
+    var columnName = document.createTextNode('' + name.toUpperCase());
+    if (i > 4) {
       column.style.display = "None";
     }
     column.appendChild(columnName);
@@ -151,11 +153,54 @@ function createColumns() {
   header.appendChild(headerRow);
 }
 
-function renderDropDownIcon() {
+function renderDropDown() {
   var dataGrid = document.getElementById('data-grid');
   var icon = document.createElement('i');
   icon.className = "fa fa-caret-square-o-down fa-2x";
+  icon.addEventListener('click', function () {
+    var dropDown = document.getElementById('drop-down');
+    dropDown.style.display === 'block' ? dropDown.style.display = 'none' : dropDown.style.display = 'block';
+  });
   dataGrid.appendChild(icon);
+
+  var menu = document.createElement('form');
+  menu.id = "drop-down";
+  var header = document.createElement('h3');
+  header.appendChild(document.createTextNode('SELECTED FIELDS'));
+  menu.appendChild(header);
+  var fieldOptions = document.createElement('ul');
+  menu.appendChild(fieldOptions);
+
+  var dataJson = __webpack_require__(1);
+  Object.keys(dataJson["1"]).forEach(function (key) {
+    var input = document.createElement('input');
+    input.type = "checkbox";
+    key = key.split(/(?=[A-Z])/).join(' ');
+    input.value = key;
+    input.addEventListener('onchange', function () {
+      var maxChecks = 5;
+      var dropDown = document.getElementById('drop-down');
+      var checkBoxes = dropDown.getElementsByTagName('input');
+      var currentChecks = 0;
+      checkBoxes.forEach(function (box) {
+        if (box.checked) {
+          currentChecks++;
+        }
+      });
+    });
+    var label = document.createElement('label');
+    var labelName = document.createTextNode('' + key);
+    label.appendChild(input);
+    label.appendChild(labelName);
+    var listElement = document.createElement('li');
+    listElement.appendChild(label);
+    fieldOptions.appendChild(listElement);
+  });
+
+  var button = document.createElement('button');
+  button.appendChild(document.createTextNode('Apply'));
+  menu.appendChild(button);
+  dataGrid.appendChild(menu);
 }
 
 function addSelectorEvents() {
