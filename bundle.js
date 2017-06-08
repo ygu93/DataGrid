@@ -177,16 +177,29 @@ function renderDropDown() {
     input.type = "checkbox";
     key = key.split(/(?=[A-Z])/).join(' ');
     input.value = key;
-    input.addEventListener('onchange', function () {
+    input.addEventListener('change', function () {
       var maxChecks = 5;
       var dropDown = document.getElementById('drop-down');
-      var checkBoxes = dropDown.getElementsByTagName('input');
+      var checkBoxes = Array.from(dropDown.getElementsByTagName('input'));
       var currentChecks = 0;
+      var unchecked = [];
       checkBoxes.forEach(function (box) {
-        if (box.checked) {
+        if (box.checked === true) {
           currentChecks++;
+        } else {
+          unchecked.push(box);
         }
       });
+
+      if (currentChecks === maxChecks) {
+        unchecked.forEach(function (box) {
+          box.disabled = true;
+        });
+      } else {
+        checkBoxes.forEach(function (box) {
+          box.disabled = false;
+        });
+      }
     });
     var label = document.createElement('label');
     var labelName = document.createTextNode('' + key);

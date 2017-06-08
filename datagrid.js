@@ -96,16 +96,29 @@ function renderDropDown(){
     input.type = "checkbox";
     key = key.split(/(?=[A-Z])/).join(' ');
     input.value = key;
-    input.addEventListener('onchange', () => {
+    input.addEventListener('change', () => {
       let maxChecks = 5;
       let dropDown = document.getElementById('drop-down');
-      let checkBoxes = dropDown.getElementsByTagName('input');
+      let checkBoxes = Array.from(dropDown.getElementsByTagName('input'));
       let currentChecks = 0;
+      let unchecked = [];
       checkBoxes.forEach(box => {
-        if(box.checked){
+        if(box.checked === true){
           currentChecks++;
+        }else{
+          unchecked.push(box);
         }
       })
+
+      if(currentChecks === maxChecks){
+        unchecked.forEach(box => {
+          box.disabled = true;
+        })
+      }else{
+        checkBoxes.forEach(box => {
+          box.disabled = false;
+        })
+      }
     })
     let label = document.createElement('label');
     let labelName = document.createTextNode(`${key}`);
