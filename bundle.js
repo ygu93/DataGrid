@@ -78,6 +78,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.renderGrid = renderGrid;
 exports.addSelectorEvents = addSelectorEvents;
+// renders datagrid
+
 function renderGrid() {
   renderDropDown();
   var data = __webpack_require__(1);
@@ -127,6 +129,7 @@ function renderGrid() {
   });
 }
 
+// renders columns of the datagrid
 function createColumns() {
   var header = document.getElementById('grid-head');
   var headerRow = document.createElement('div');
@@ -153,6 +156,7 @@ function createColumns() {
   header.appendChild(headerRow);
 }
 
+// renders dropdown menu
 function renderDropDown() {
   var dataGrid = document.getElementById('data-grid');
   var icon = document.createElement('i');
@@ -216,6 +220,7 @@ function renderDropDown() {
   dataGrid.appendChild(menu);
 }
 
+// adds event listeners for more/less radio buttons
 function addSelectorEvents() {
   var selectors = document.getElementsByTagName('input');
   selectors = Array.from(selectors);
@@ -243,6 +248,7 @@ function addSelectorEvents() {
   });
 }
 
+// logic for sorting tables by column name
 function sortTable(n, name, e) {
   var table = void 0,
       rows = void 0,
@@ -274,13 +280,13 @@ function sortTable(n, name, e) {
         value2 = value2.getElementsByTagName('li')[0];
       }
 
-      if (name !== 'COMMENTS' && name !== 'NAME') {
-        value1 = convertToNum(value1.innerHTML.slice(1));
-      } else {
+      if (name === 'Comments' || name === 'Name') {
         value1 = value1.innerHTML;
+      } else {
+        value1 = convertToNum(value1.innerHTML.slice(1));
       }
 
-      if (name !== 'COMMENTS' && name !== 'NAME') {
+      if (name !== 'Comments' && name !== 'Name') {
         value2 = convertToNum(value2.innerHTML.slice(1));
       } else {
         value2 = value2.innerHTML;
@@ -311,12 +317,21 @@ function sortTable(n, name, e) {
     }
   }
   if (dir === "asc") {
-    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-asc';
+    if (e.target.tagName === 'I') {
+      e.target.className = 'fa fa-sort-asc';
+    } else {
+      e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-asc';
+    }
   } else if (dir === "desc") {
-    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-desc';
+    if (e.target.tagName === "I") {
+      e.target.className = 'fa fa-sort-asc';
+    } else {
+      e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-desc';
+    }
   }
 }
 
+// helper method for sorting
 function convertToNum(str) {
   return parseInt(str.split(',').join(''));
 }

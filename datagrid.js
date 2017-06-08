@@ -1,3 +1,4 @@
+// renders datagrid
 
 export function renderGrid(){
   renderDropDown();
@@ -48,6 +49,7 @@ export function renderGrid(){
   })
 }
 
+// renders columns of the datagrid
 function createColumns(){
   let header = document.getElementById('grid-head')
   let headerRow = document.createElement('div');
@@ -72,6 +74,7 @@ function createColumns(){
   header.appendChild(headerRow);
 }
 
+// renders dropdown menu
 function renderDropDown(){
   let dataGrid = document.getElementById('data-grid');
   let icon = document.createElement('i');
@@ -136,6 +139,7 @@ function renderDropDown(){
 
 }
 
+// adds event listeners for more/less radio buttons
 export function addSelectorEvents(){
   let selectors = document.getElementsByTagName('input');
   selectors = Array.from(selectors);
@@ -161,6 +165,7 @@ export function addSelectorEvents(){
   })
 }
 
+// logic for sorting tables by column name
 function sortTable(n, name, e){
   let table, rows, swapped, i, value1, value2, shouldSwap, dir, swapCount = 0;
   table = document.getElementById('data-grid');
@@ -185,13 +190,14 @@ function sortTable(n, name, e){
         value2 = value2.getElementsByTagName('li')[0];
       }
 
-      if(name !==  'COMMENTS' && name!== 'NAME'){
-        value1 = convertToNum(value1.innerHTML.slice(1));
-      }else{
+      if(name ===  'Comments' || name === 'Name'){
         value1 = value1.innerHTML;
+      }else{
+        value1 = convertToNum(value1.innerHTML.slice(1));
       }
 
-      if(name !== 'COMMENTS' && name !== 'NAME'){
+
+      if(name !== 'Comments' && name !== 'Name'){
         value2 = convertToNum(value2.innerHTML.slice(1));
       }else{
         value2 = value2.innerHTML;
@@ -223,12 +229,21 @@ function sortTable(n, name, e){
 
   }
   if(dir === "asc"){
-    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-asc';
+    if(e.target.tagName === 'I'){
+      e.target.className = 'fa fa-sort-asc';
+    }else{
+      e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-asc';
+    }
   }else if(dir === "desc"){
-    e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-desc';
+    if(e.target.tagName === "I"){
+      e.target.className = 'fa fa-sort-asc';
+    }else{
+      e.target.getElementsByTagName('i')[0].className = 'fa fa-sort-desc';
+    }
   }
 }
 
+// helper method for sorting
 function convertToNum(str){
   return parseInt(str.split(',').join(''));
 }
