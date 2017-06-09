@@ -1,4 +1,4 @@
-// show and hide columns based on dropdown selection
+// show and hide columns based on dropdown selection of check boxes
 export function showColumns(e){
   e.preventDefault();
   let checkBoxes = e.target.getElementsByTagName('input');
@@ -25,7 +25,7 @@ export function showColumns(e){
   let dropDown = document.getElementById('drop-down');
   dropDown.style.display = 'none';
 }
-// adds event listeners for more/less radio buttons
+// adds event listeners for more/less radio buttons, more elements are tagged with the class more and are hidden on selection of less
 export function addSelectorEvents(){
   let selectors = document.getElementsByTagName('input');
   selectors = Array.from(selectors);
@@ -51,7 +51,7 @@ export function addSelectorEvents(){
   })
 }
 
-// logic for sorting tables by column name
+// logic for sorting tables by column name based on a modified version of bubble sort
 export function sortTable(n, name, e){
   let table, rows, swapped, i, value1, value2, shouldSwap, dir, swapCount = 0;
   table = document.getElementById('data-grid');

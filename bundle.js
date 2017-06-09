@@ -190,6 +190,8 @@ function renderDropDown() {
     } else {
       input.disabled = true;
     }
+
+    // event listener to check to disable other check boxes when max column selection is reached
     input.addEventListener('change', function () {
       var maxChecks = 6;
       var dropDown = document.getElementById('drop-down');
@@ -343,7 +345,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.showColumns = showColumns;
 exports.addSelectorEvents = addSelectorEvents;
 exports.sortTable = sortTable;
-// show and hide columns based on dropdown selection
+// show and hide columns based on dropdown selection of check boxes
 function showColumns(e) {
   e.preventDefault();
   var checkBoxes = e.target.getElementsByTagName('input');
@@ -372,7 +374,7 @@ function showColumns(e) {
   var dropDown = document.getElementById('drop-down');
   dropDown.style.display = 'none';
 }
-// adds event listeners for more/less radio buttons
+// adds event listeners for more/less radio buttons, more elements are tagged with the class more and are hidden on selection of less
 function addSelectorEvents() {
   var selectors = document.getElementsByTagName('input');
   selectors = Array.from(selectors);
@@ -400,7 +402,7 @@ function addSelectorEvents() {
   });
 }
 
-// logic for sorting tables by column name
+// logic for sorting tables by column name based on a modified version of bubble sort
 function sortTable(n, name, e) {
   var table = void 0,
       rows = void 0,

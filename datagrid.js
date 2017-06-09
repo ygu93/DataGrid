@@ -108,6 +108,8 @@ function renderDropDown(){
     }else{
       input.disabled = true;
     }
+
+    // event listener to check to disable other check boxes when max column selection is reached
     input.addEventListener('change', () => {
       let maxChecks = 6;
       let dropDown = document.getElementById('drop-down');
