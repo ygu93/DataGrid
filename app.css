@@ -171,11 +171,13 @@
   padding-bottom: 8px;
   margin-right: 5px;
   color: darkslategray;
+  font-size: 1.3vw;
 }
 
 #drop-down ul{
   margin-left: 10px;
   margin-top: 15px;
+  font-size: 1.2vw;
 }
 
 #drop-down input{
@@ -196,7 +198,7 @@
   padding-top: 10px;
   padding-bottom: 10px;
   border-radius: 5px;
-  font-size: 14px;
+  font-size: 1.1vw;
   color: gray;
   font-weight: bold;
   border: none;
