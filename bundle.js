@@ -160,7 +160,7 @@ function createColumns() {
 function renderDropDown() {
   var dataGrid = document.getElementById('data-grid');
   var icon = document.createElement('i');
-  icon.className = "fa fa-caret-square-o-down fa-2x";
+  icon.className = "fa fa-caret-square-o-down";
   icon.addEventListener('click', function () {
     var dropDown = document.getElementById('drop-down');
     dropDown.style.display === 'block' ? dropDown.style.display = 'none' : dropDown.style.display = 'block';

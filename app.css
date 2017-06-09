@@ -7,8 +7,9 @@
   border: 2px solid darkgray;
   display: block;
   font-family: 'Montserrat', sans-serif;
-  width: 170px;
   margin-left: 10px;
+  font-size: 1.4vw;
+  width: 15vw;
 }
 
 .options-input{
@@ -116,10 +117,15 @@
   top: 9.5vh;
   color: darkgray;
   background-color: rgb(242, 242, 242);
+  font-size: 2.4vw;
 }
 
 .fa-caret-square-o-down:hover{
   cursor: pointer;
+}
+
+#data-grid > .fa {
+  font-size: 2.4vw;
 }
 
 #drop-down{
@@ -132,6 +138,11 @@
   background-color: white;
   width: 18vw;
   padding-bottom: 15px;
+}
+
+#drop-down ul *:hover {
+  background-color: darkgray;
+  cursor: pointer;
 }
 
 #drop-down h3{
@@ -174,6 +185,8 @@
 
 #drop-down button:hover{
   cursor: pointer;
+  background-color: gray;
+  color: rgb(232, 232, 232);
 }
 
 #data-grid{
@@ -184,4 +197,7 @@
   display: inline-block;
   color: rgb(74, 74, 74);
   border-right: 2px solid darkgray;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  font-size: 1.4vw;
 }

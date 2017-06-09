@@ -78,7 +78,7 @@ function createColumns(){
 function renderDropDown(){
   let dataGrid = document.getElementById('data-grid');
   let icon = document.createElement('i');
-  icon.className = "fa fa-caret-square-o-down fa-2x";
+  icon.className = "fa fa-caret-square-o-down";
   icon.addEventListener('click', () => {
     let dropDown = document.getElementById('drop-down');
     dropDown.style.display === 'block' ? dropDown.style.display = 'none' : dropDown.style.display = 'block';
