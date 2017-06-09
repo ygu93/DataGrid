@@ -135,10 +135,33 @@ function renderDropDown(){
   let button = document.createElement('button');
   button.appendChild(document.createTextNode('Apply'));
   menu.appendChild(button)
+  menu.addEventListener('submit', showColumns)
   dataGrid.appendChild(menu);
 
 }
 
+function showColumns(e){
+  e.preventDefault();
+  let checkBoxes = e.target.getElementsByTagName('input');
+  let columns = document.getElementById('grid-head').getElementsByClassName('grid-cell');
+  let rows = document.getElementsByClassName('grid-data-item');
+  for (let i = 0; i < checkBoxes.length; i++) {
+    if(checkBoxes[i].checked){
+      columns[i].style.display = 'inline-block';
+
+      for (var j = 0; j < rows.length; j++) {
+        rows[j].childNodes[i].style.display = 'inline-block';
+      }
+    }else{
+      columns[i].style.display = 'none';
+      for (var j = 0; j < rows.length; j++) {
+        rows[j].childNodes[i].style.display = 'none';
+      }
+    }
+  }
+  let dropDown = document.getElementById('drop-down');
+  dropDown.style.display = 'none';
+}
 // adds event listeners for more/less radio buttons
 export function addSelectorEvents(){
   let selectors = document.getElementsByTagName('input');

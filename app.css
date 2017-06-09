@@ -59,9 +59,7 @@
 }
 
 
-.grid-header-row .grid-cell:nth-of-type(5n) {
-  border-right: 2px solid darkgray;
-}
+
 
 .grid-data-item div{
   text-align: right;
@@ -80,9 +78,6 @@
   padding-right: 0px;
 }
 
-.grid-data-item > div:nth-of-type(5n){
-  border-right: 2px solid darkgray;
-}
 
 .grid-data-item ul{
   text-align: right;
@@ -188,4 +183,5 @@
   position: relative;
   display: inline-block;
   color: rgb(74, 74, 74);
+  border-right: 2px solid darkgray;
 }
