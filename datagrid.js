@@ -39,7 +39,7 @@ export function renderGrid(){
         rowData.className = `grid-data-${dataKey.toLowerCase()} grid-cell`;
         let rowDataValue = document.createTextNode(`${columnValue}`);
         rowData.appendChild(rowDataValue);
-        if(dataKey === "MonthlyPlan" || dataKey === "Comments"){
+        if(dataKey === "Comments"){
           rowData.style.display = 'none';
         }
         row.appendChild(rowData);
@@ -61,7 +61,7 @@ function createColumns(){
     column.addEventListener('click', function(e){ sortTable(i, name, e); });
     name = name.split(/(?=[A-Z])/).join(' ');
     let columnName = document.createTextNode(`${name.toUpperCase()}`);
-    if(i > 4){
+    if(i > 5){
       column.style.display = "None";
     }
     column.appendChild(columnName);
@@ -92,15 +92,19 @@ function renderDropDown(){
   menu.appendChild(header);
   let fieldOptions = document.createElement('ul');
   menu.appendChild(fieldOptions);
-
   let dataJson = require('./data.json');
+  let i = 0;
+
   Object.keys(dataJson["1"]).forEach(key => {
     let input = document.createElement('input');
     input.type = "checkbox";
     key = key.split(/(?=[A-Z])/).join(' ');
     input.value = key;
+    if(key !== 'Comments'){
+      input.checked = true;
+    }
     input.addEventListener('change', () => {
-      let maxChecks = 5;
+      let maxChecks = 6;
       let dropDown = document.getElementById('drop-down');
       let checkBoxes = Array.from(dropDown.getElementsByTagName('input'));
       let currentChecks = 0;
@@ -143,6 +147,10 @@ function renderDropDown(){
 function showColumns(e){
   e.preventDefault();
   let checkBoxes = e.target.getElementsByTagName('input');
+  if(Array.from(checkBoxes).filter(box => box.checked).length === 0){
+    alert('must choose to display at least one field');
+    return;
+  }
   let columns = document.getElementById('grid-head').getElementsByClassName('grid-cell');
   let rows = document.getElementsByClassName('grid-data-item');
   for (let i = 0; i < checkBoxes.length; i++) {

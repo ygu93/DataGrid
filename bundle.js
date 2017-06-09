@@ -119,7 +119,7 @@ function renderGrid() {
         _rowData.className = 'grid-data-' + dataKey.toLowerCase() + ' grid-cell';
         var _rowDataValue = document.createTextNode('' + columnValue);
         _rowData.appendChild(_rowDataValue);
-        if (dataKey === "MonthlyPlan" || dataKey === "Comments") {
+        if (dataKey === "Comments") {
           _rowData.style.display = 'none';
         }
         row.appendChild(_rowData);
@@ -143,7 +143,7 @@ function createColumns() {
     });
     name = name.split(/(?=[A-Z])/).join(' ');
     var columnName = document.createTextNode('' + name.toUpperCase());
-    if (i > 4) {
+    if (i > 5) {
       column.style.display = "None";
     }
     column.appendChild(columnName);
@@ -174,15 +174,19 @@ function renderDropDown() {
   menu.appendChild(header);
   var fieldOptions = document.createElement('ul');
   menu.appendChild(fieldOptions);
-
   var dataJson = __webpack_require__(1);
+  var i = 0;
+
   Object.keys(dataJson["1"]).forEach(function (key) {
     var input = document.createElement('input');
     input.type = "checkbox";
     key = key.split(/(?=[A-Z])/).join(' ');
     input.value = key;
+    if (key !== 'Comments') {
+      input.checked = true;
+    }
     input.addEventListener('change', function () {
-      var maxChecks = 5;
+      var maxChecks = 6;
       var dropDown = document.getElementById('drop-down');
       var checkBoxes = Array.from(dropDown.getElementsByTagName('input'));
       var currentChecks = 0;
@@ -224,6 +228,12 @@ function renderDropDown() {
 function showColumns(e) {
   e.preventDefault();
   var checkBoxes = e.target.getElementsByTagName('input');
+  if (Array.from(checkBoxes).filter(function (box) {
+    return box.checked;
+  }).length === 0) {
+    alert('must choose to display at least one field');
+    return;
+  }
   var columns = document.getElementById('grid-head').getElementsByClassName('grid-cell');
   var rows = document.getElementsByClassName('grid-data-item');
   for (var i = 0; i < checkBoxes.length; i++) {

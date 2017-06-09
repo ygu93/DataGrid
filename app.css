@@ -34,6 +34,9 @@
   height: 14vh;
   border-bottom: 2px solid darkgray;
   vertical-align: middle;
+  font-size: 1.2vw;
+  text-overflow: ellipsis;
+  overflow:hidden;
 }
 
 
@@ -47,6 +50,8 @@
 .grid-header-row .grid-cell{
   text-align: right;
   padding-right: 20px;
+  padding-top: 5vh;
+  padding-bottom: 5vh;
 }
 
 .grid-header-row .grid-cell:hover{
@@ -140,13 +145,16 @@
   padding-bottom: 15px;
 }
 
-#drop-down ul *:hover {
+#drop-down li:hover {
   background-color: darkgray;
+}
+
+#drop-down label:hover {
   cursor: pointer;
 }
 
 #drop-down h3{
-  padding-top: 10px;
+  padding-top: 20px;
   margin-left: 10px;
   border-bottom: 1px solid darkgray;
   padding-bottom: 8px;
@@ -197,7 +205,5 @@
   display: inline-block;
   color: rgb(74, 74, 74);
   border-right: 2px solid darkgray;
-  text-overflow: ellipsis;
-  overflow:hidden;
-  font-size: 1.4vw;
+
 }
