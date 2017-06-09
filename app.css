@@ -43,6 +43,7 @@
 
 
 
+
 .grid-header-row{
   font-weight: bold;
   border-top: 2px solid darkgray;
@@ -60,6 +61,7 @@
 
 .grid-header-row .grid-cell:hover{
   cursor: pointer;
+  background-color: #7b97b1;
 }
 
 .grid-header-row .grid-cell:first-of-type{

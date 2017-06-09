@@ -1,6 +1,6 @@
 # Data Grid
 
-[Live Link](https://ygu93.github.io/Data-Grid)
+[Live Link](https://ygu93.github.io/DataGrid)
 
 This data grid is created using vanilla JavaScript, HTML and CSS with build tools such as Webpack and Babel to allow use of ES6 syntax.
 
