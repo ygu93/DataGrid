@@ -134,6 +134,8 @@
 
 .fa-caret-square-o-down:hover{
   cursor: pointer;
+  color: rgb(242, 242, 242);
+  background-color: darkgray;
 }
 
 #data-grid > .fa {
