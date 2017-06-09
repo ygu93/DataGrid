@@ -77,7 +77,9 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.renderGrid = renderGrid;
-exports.addSelectorEvents = addSelectorEvents;
+
+var _datagridActions = __webpack_require__(3);
+
 // renders datagrid
 
 function renderGrid() {
@@ -98,7 +100,7 @@ function renderGrid() {
         columnValue = columnValue.toLocaleString();
         columnValue = '$' + columnValue;
       }
-      if (dataKey === "BestCase" || dataKey === "Commit") {
+      if (Array.isArray(country[dataKey])) {
         var i = 0;
         var rowData = document.createElement("div");
         rowData.className = 'grid-cell grid-data-' + dataKey.toLowerCase();
@@ -127,6 +129,7 @@ function renderGrid() {
     });
     body.appendChild(row);
   });
+  (0, _datagridActions.addSelectorEvents)();
 }
 
 // renders columns of the datagrid
@@ -139,7 +142,7 @@ function createColumns() {
   columnNames.forEach(function (name, i) {
     var column = document.createElement('div');
     column.addEventListener('click', function (e) {
-      sortTable(i, name, e);
+      (0, _datagridActions.sortTable)(i, name, e);
     });
     name = name.split(/(?=[A-Z])/).join(' ');
     var columnName = document.createTextNode('' + name.toUpperCase());
@@ -204,15 +207,20 @@ function renderDropDown() {
       if (currentChecks === maxChecks) {
         unchecked.forEach(function (box) {
           box.disabled = true;
+          box.parentNode.style.color = "rgb(214, 221, 235)";
         });
       } else {
         checkBoxes.forEach(function (box) {
           box.disabled = false;
+          box.parentNode.style.color = "rgb(54,92,127)";
         });
       }
     });
     var label = document.createElement('label');
     var labelName = document.createTextNode('' + key);
+    if (key === 'Comments') {
+      label.style.color = "rgb(214, 221, 235)";
+    }
     label.appendChild(input);
     label.appendChild(labelName);
     var listElement = document.createElement('li');
@@ -223,10 +231,119 @@ function renderDropDown() {
   var button = document.createElement('button');
   button.appendChild(document.createTextNode('Apply'));
   menu.appendChild(button);
-  menu.addEventListener('submit', showColumns);
+  menu.addEventListener('submit', _datagridActions.showColumns);
   dataGrid.appendChild(menu);
 }
 
+/***/ }),
+/* 1 */
+/***/ (function(module, exports) {
+
+module.exports = {
+	"1": {
+		"Name": "Europe",
+		"Plan": 10525200,
+		"Forecast": 12700200,
+		"BestCase": [
+			12700200,
+			11700400
+		],
+		"Commit": [
+			12700200,
+			11700400
+		],
+		"MonthlyPlan": 12700200,
+		"Comments": "Second smallest continent in the world"
+	},
+	"2": {
+		"Name": "Belgium",
+		"Plan": 2525200,
+		"Forecast": 3125200,
+		"BestCase": [
+			2900450,
+			2890120
+		],
+		"Commit": [
+			2900450,
+			2890120
+		],
+		"MonthlyPlan": 2900450,
+		"Comments": "Consumes 150 liters of beer per person per year"
+	},
+	"3": {
+		"Name": "England",
+		"Plan": 4600400,
+		"Forecast": 2500600,
+		"BestCase": [
+			3900300,
+			2900300
+		],
+		"Commit": [
+			3900300,
+			2900300
+		],
+		"MonthlyPlan": 3900300,
+		"Comments": "Capital City is London"
+	},
+	"4": {
+		"Name": "Sweden",
+		"Plan": 2425200,
+		"Forecast": 5425200,
+		"BestCase": [
+			6200200,
+			2400900
+		],
+		"Commit": [
+			6200200,
+			2400900
+		],
+		"MonthlyPlan": 6200200,
+		"Comments": "Taxation contributes to 54.2% of the GDP"
+	},
+	"5": {
+		"Name": "Finland",
+		"Plan": 1700200,
+		"Forecast": 4700200,
+		"BestCase": [
+			4702120,
+			4300200
+		],
+		"Commit": [
+			4702120,
+			4300200
+		],
+		"MonthlyPlan": 4702120,
+		"Comments": "Trade contributes to 74% of the GDP"
+	}
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _datagrid = __webpack_require__(0);
+
+document.addEventListener("DOMContentLoaded", function () {
+  (0, _datagrid.renderGrid)();
+});
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.showColumns = showColumns;
+exports.addSelectorEvents = addSelectorEvents;
+exports.sortTable = sortTable;
+// show and hide columns based on dropdown selection
 function showColumns(e) {
   e.preventDefault();
   var checkBoxes = e.target.getElementsByTagName('input');
@@ -370,102 +487,6 @@ function sortTable(n, name, e) {
 function convertToNum(str) {
   return parseInt(str.split(',').join(''));
 }
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports) {
-
-module.exports = {
-	"1": {
-		"Name": "Europe",
-		"Plan": 10525200,
-		"Forecast": 12700200,
-		"BestCase": [
-			12700200,
-			11700400
-		],
-		"Commit": [
-			12700200,
-			11700400
-		],
-		"MonthlyPlan": 12700200,
-		"Comments": "Second smallest continent in the world"
-	},
-	"2": {
-		"Name": "Belgium",
-		"Plan": 2525200,
-		"Forecast": 3125200,
-		"BestCase": [
-			2900450,
-			2890120
-		],
-		"Commit": [
-			2900450,
-			2890120
-		],
-		"MonthlyPlan": 2900450,
-		"Comments": "Consumes 150 liters of beer per person per year"
-	},
-	"3": {
-		"Name": "England",
-		"Plan": 4600400,
-		"Forecast": 2500600,
-		"BestCase": [
-			3900300,
-			2900300
-		],
-		"Commit": [
-			3900300,
-			2900300
-		],
-		"MonthlyPlan": 3900300,
-		"Comments": "Capital City is London"
-	},
-	"4": {
-		"Name": "Sweden",
-		"Plan": 2425200,
-		"Forecast": 5425200,
-		"BestCase": [
-			6200200,
-			2400900
-		],
-		"Commit": [
-			6200200,
-			2400900
-		],
-		"MonthlyPlan": 6200200,
-		"Comments": "Taxation contributes to 54.2% of the GDP"
-	},
-	"5": {
-		"Name": "Finland",
-		"Plan": 1700200,
-		"Forecast": 4700200,
-		"BestCase": [
-			4702120,
-			4300200
-		],
-		"Commit": [
-			4702120,
-			4300200
-		],
-		"MonthlyPlan": 4702120,
-		"Comments": "Trade contributes to 74% of the GDP"
-	}
-};
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _datagrid = __webpack_require__(0);
-
-document.addEventListener("DOMContentLoaded", function () {
-  (0, _datagrid.renderGrid)();
-  (0, _datagrid.addSelectorEvents)();
-});
 
 /***/ })
 /******/ ]);

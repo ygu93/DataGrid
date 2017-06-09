@@ -3,6 +3,7 @@
   list-style: none;
 }
 
+
 .options {
   border: 2px solid darkgray;
   display: block;
@@ -10,6 +11,7 @@
   margin-left: 10px;
   font-size: 1.4vw;
   width: 15vw;
+  margin-top: 5px;
 }
 
 .options-input{
@@ -101,16 +103,10 @@
   color: rgb(0,164,253);
 }
 
-.grid-data-bestcase li:first-of-type{
-  margin-top: -8px;
-}
 .grid-data-bestcase li:last-of-type{
   padding-top: 15px;
 }
 
-.grid-data-commit li:first-of-type{
-  margin-top: -8px;
-}
 .grid-data-commit li:last-of-type{
   padding-top: 15px;
 }
@@ -172,6 +168,7 @@
   margin-right: 5px;
   color: darkslategray;
   font-size: 1.3vw;
+  font-weight: bold;
 }
 
 #drop-down ul{

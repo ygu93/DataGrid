@@ -1,6 +1,5 @@
-import { renderGrid, addSelectorEvents } from './datagrid.js'
+import { renderGrid } from './datagrid.js'
 
 document.addEventListener("DOMContentLoaded", () => {
   renderGrid();
-  addSelectorEvents();
 })
