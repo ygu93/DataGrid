@@ -102,6 +102,8 @@ function renderDropDown(){
     input.value = key;
     if(key !== 'Comments'){
       input.checked = true;
+    }else{
+      input.disabled = true;
     }
     input.addEventListener('change', () => {
       let maxChecks = 6;
